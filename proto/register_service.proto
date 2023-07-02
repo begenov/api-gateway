@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/begenov/api-gateway /pb";
+
+
+message RequestRegister {
+    string email = 1;
+    string phone = 2;
+    string role = 3;
+    string address = 4;
+    string password = 5;
+}
+
+message Response {
+    string message = 1;
+}
+
+message ResponseRegister {
+    int32 id = 1; 
+    string email = 2;
+    string phone = 3;
+    string role = 4;
+    string address = 5;
+}
+
+
+message RequestToken {
+    string refresh_token = 2;
+}
+
+message ResponseToken {
+    string access_token = 1;
+    string refresh_token = 2;
+}
+
+service Register {
+    rpc SignUp(RequestRegister) returns (Response) {
+
+    }
+
+    rpc SignIn(RequestRegister) returns (ResponseToken) {
+        
+    }
+
+    rpc RefreshToken(RequestToken) returns (ResponseToken) {
+        
+    }
+
+}
