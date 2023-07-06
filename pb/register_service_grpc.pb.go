@@ -19,7 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RegisterClient interface {
 	SignUp(ctx context.Context, in *RequestRegister, opts ...grpc.CallOption) (*Response, error)
-	SignIn(ctx context.Context, in *RequestRegister, opts ...grpc.CallOption) (*ResponseToken, error)
+	SignIn(ctx context.Context, in *RequestSignIn, opts ...grpc.CallOption) (*ResponseToken, error)
 	RefreshToken(ctx context.Context, in *RequestToken, opts ...grpc.CallOption) (*ResponseToken, error)
 }
 
@@ -40,7 +40,7 @@ func (c *registerClient) SignUp(ctx context.Context, in *RequestRegister, opts .
 	return out, nil
 }
 
-func (c *registerClient) SignIn(ctx context.Context, in *RequestRegister, opts ...grpc.CallOption) (*ResponseToken, error) {
+func (c *registerClient) SignIn(ctx context.Context, in *RequestSignIn, opts ...grpc.CallOption) (*ResponseToken, error) {
 	out := new(ResponseToken)
 	err := c.cc.Invoke(ctx, "/pb.Register/SignIn", in, out, opts...)
 	if err != nil {
@@ -63,7 +63,7 @@ func (c *registerClient) RefreshToken(ctx context.Context, in *RequestToken, opt
 // for forward compatibility
 type RegisterServer interface {
 	SignUp(context.Context, *RequestRegister) (*Response, error)
-	SignIn(context.Context, *RequestRegister) (*ResponseToken, error)
+	SignIn(context.Context, *RequestSignIn) (*ResponseToken, error)
 	RefreshToken(context.Context, *RequestToken) (*ResponseToken, error)
 	mustEmbedUnimplementedRegisterServer()
 }
@@ -75,7 +75,7 @@ type UnimplementedRegisterServer struct {
 func (UnimplementedRegisterServer) SignUp(context.Context, *RequestRegister) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignUp not implemented")
 }
-func (UnimplementedRegisterServer) SignIn(context.Context, *RequestRegister) (*ResponseToken, error) {
+func (UnimplementedRegisterServer) SignIn(context.Context, *RequestSignIn) (*ResponseToken, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
 }
 func (UnimplementedRegisterServer) RefreshToken(context.Context, *RequestToken) (*ResponseToken, error) {
@@ -113,7 +113,7 @@ func _Register_SignUp_Handler(srv interface{}, ctx context.Context, dec func(int
 }
 
 func _Register_SignIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestRegister)
+	in := new(RequestSignIn)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -125,7 +125,7 @@ func _Register_SignIn_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: "/pb.Register/SignIn",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RegisterServer).SignIn(ctx, req.(*RequestRegister))
+		return srv.(RegisterServer).SignIn(ctx, req.(*RequestSignIn))
 	}
 	return interceptor(ctx, in, info, handler)
 }
