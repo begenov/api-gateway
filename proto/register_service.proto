@@ -25,22 +25,28 @@ message ResponseRegister {
     string address = 5;
 }
 
+message RequestSignIn {
+    string email = 1;
+    string password = 2;
+    string role = 3;
+}
+
 
 message RequestToken {
-    string refresh_token = 2;
+    string refresh_token = 1;
+    string role = 2;
 }
 
 message ResponseToken {
     string access_token = 1;
     string refresh_token = 2;
 }
-
 service Register {
     rpc SignUp(RequestRegister) returns (Response) {
 
     }
 
-    rpc SignIn(RequestRegister) returns (ResponseToken) {
+    rpc SignIn(RequestSignIn) returns (ResponseToken) {
         
     }
 
