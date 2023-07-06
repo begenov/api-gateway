@@ -1,15 +1,22 @@
 package main
 
 import (
-	"context"
-	"log"
+	"fmt"
 
-	"github.com/begenov/api-gateway/client"
-	"github.com/begenov/api-gateway/pb"
+	"github.com/begenov/api-gateway/internal/app"
+	"github.com/begenov/api-gateway/internal/config"
 )
 
 func main() {
-	client, err := client.NewRegisterServiceClient("localhost:9090")
+	cfg := config.NewConfig()
+	fmt.Println(cfg)
+	if err := app.Run(cfg); err != nil {
+		panic(err)
+	}
+}
+
+/*
+client, err := client.NewRegisterServiceClient("localhost:9090")
 	if err != nil {
 		log.Fatalf("Не удалось создать клиентскую структуру: %v", err)
 	}
@@ -17,16 +24,43 @@ func main() {
 
 	ctx := context.Background()
 
-	request := &pb.RequestRegister{
-		Email: "asf",
-		Phone: "1342",
-		Role:  "user",
+	// test, err := client.SignUp(ctx, &pb.RequestRegister{
+	// 	Email:    "test1@gmail.com",
+	// 	Password: "test",
+	// 	Address:  "test",
+	// 	Role:     "user",
+	// 	Phone:    "7889456",
+	// })
+	// if err != nil {
+	// 	log.Fatal(err, "sign-up")
+	// }
+
+	// fmt.Printf("test.Message: %v\n", test.Message)
+
+	// request := &pb.RequestSignIn{
+	// 	Email:    "test1@gmail.com",
+	// 	Password: "test",
+	// 	Role:     "user",
+	// }
+
+	// response, err := client.SignIn(ctx, request)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// log.Printf("Ответ от сервера: %s \t %s", response.AccessToken, response.RefreshToken)
+
+	inp := &pb.RequestToken{
+		RefreshToken: "$2a$10$tEHCmZEe3VznM7t2vJZ1r.aBJ1xkFBkxgYcHpMsnO.Cin1VzJUKQa",
+		Role:         "user",
 	}
 
-	response, err := client.SignUp(ctx, request)
+	token, err := client.RefreshToken(ctx, inp)
+
 	if err != nil {
-		log.Fatalf("Ошибка при вызове метода SignUp: %v", err)
+		log.Fatal(err, "--token--")
 	}
 
-	log.Printf("Ответ от сервера: %s", response.Message)
-}
+	fmt.Printf("token.AccessToken: %v\n", token.AccessToken)
+	fmt.Printf("token.RefreshToken: %v\n", token.RefreshToken)
+*/
