@@ -9,9 +9,9 @@ import (
 )
 
 type Config struct {
-	Log                 LoggerConfig
-	POSTGRES            PostgresConfig `required:"true"`
-	RegisterServiceAddr string         `required:"true"`
+	Log                   LoggerConfig
+	POSTGRES              PostgresConfig `required:"true"`
+	Register_Service_Addr string         `required:"true"`
 }
 
 type LoggerConfig struct {
