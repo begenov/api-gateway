@@ -27,7 +27,7 @@ func Run(cfg *config.Config) error {
 		return err
 	}
 
-	registergRPCClient, err := client.NewRegisterServiceClient(cfg.RegisterServiceAddr)
+	registergRPCClient, err := client.NewRegisterServiceClient(cfg.Register_Service_Addr)
 	if err != nil {
 		return err
 	}
