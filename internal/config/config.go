@@ -12,12 +12,12 @@ type Config struct {
 	Log                   LoggerConfig
 	POSTGRES              PostgresConfig `required:"true"`
 	Register_Service_Addr string         `required:"true"`
+	Server                ServerConfig   `required:"true"`
 }
 
 type LoggerConfig struct {
 	Level  string `json:"level" required:"true"`
 	Format string `json:"format" required:"true"`
-	HTTP   HTTPServerConfig
 }
 
 type PostgresConfig struct {
@@ -28,14 +28,15 @@ type PostgresConfig struct {
 	Database string `required:"true"`
 }
 
-type HTTPServerConfig struct {
-	Port           string
-	ReadTimeout    time.Duration
-	WriteTimeout   time.Duration
-	MaxHeaderBytes int
+type ServerConfig struct {
+	HTTP_Port        string        `required:"true"`
+	READ_TIMEOUT     time.Duration `required:"true"`
+	WRITE_TIMEOUT    time.Duration `required:"true"`
+	MAX_HEADER_BYTES int           `required:"true"`
 }
 
 func NewConfig() *Config {
+
 	envFile := "./.env"
 	err := godotenv.Load(envFile)
 	if err != nil {

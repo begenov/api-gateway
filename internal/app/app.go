@@ -38,7 +38,7 @@ func Run(cfg *config.Config) error {
 
 	httpHandler := httpHandler.NewHandler(service, logger, registergRPCClient)
 
-	srv := server.NewServer(&cfg.Log.HTTP, httpHandler.Init())
+	srv := server.NewServer(&cfg.Server, httpHandler.Init())
 
 	go func() {
 		if err := srv.Start(); err != nil {
@@ -46,7 +46,7 @@ func Run(cfg *config.Config) error {
 		}
 	}()
 
-	logger.Sugar().Infof("Server started: %s", cfg.Log.HTTP.Port)
+	logger.Sugar().Infof("Server started: %s", cfg.Server.HTTP_Port)
 	quit := make(chan os.Signal, 1)
 
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
