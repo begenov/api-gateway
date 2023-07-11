@@ -3,7 +3,7 @@ package v1
 import (
 	"net/http"
 
-	"github.com/begenov/api-gateway/pb"
+	"github.com/begenov/register-service/pb"
 	"github.com/gin-gonic/gin"
 )
 

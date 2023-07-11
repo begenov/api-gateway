@@ -3,7 +3,7 @@ package client
 import (
 	"context"
 
-	"github.com/begenov/api-gateway/pb"
+	"github.com/begenov/register-service/pb"
 	"google.golang.org/grpc"
 )
 
